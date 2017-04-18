@@ -2,8 +2,11 @@
 #include "Enumerate.h"
 CMonoInfo * CGlyTree::m_pMono = NULL;
 
+<<<<<<< HEAD
 time_t S2, E2;
 
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 int Threshold=pow(2,20);//每个节点最多三个分支
 
 bool CGlyTree::ComByString(const string &StringA, const string &StringB)
@@ -25,6 +28,7 @@ bool CGlyTree::ComByString(const string &StringA, const string &StringB)
 	}
 }
 
+<<<<<<< HEAD
 ////////////////////////// all the elements in this constructed str are digits
 /////////////////////////Sort Accord Str
 //string CGlyTree::RecurForValueTree(CGlyTree &cTree, unInt root, unInt level)
@@ -98,6 +102,25 @@ string &CGlyTree::RecurForValueTree(CGlyTree &cTree, unInt root, unInt level)
 	if (cTree.m_vvuTopology[root].size() == 0)
 	{
 		cTree.str_m_vuNodeValue[root] += stream.str();
+=======
+///////////////////////Sort Accord Str
+string CGlyTree::RecurForValueTree(CGlyTree &cTree, unInt root, unInt level)
+{//递归求一个树的各节点编码值;
+	unsigned long long tempvalue;
+	if (root<0 || root >= cTree.m_vvuTopology.size())
+	{
+		cout << "beyond the bound of array error" << endl;
+		return 0;
+	}
+	cTree.str_m_vuNodeValue[root] = "";
+	tempvalue = cTree.m_vuNodeLabel[root] + 3;
+	stringstream stream;
+	stream.str("");
+	stream << tempvalue;
+	cTree.str_m_vuNodeValue[root] += stream.str();
+	if (cTree.m_vvuTopology[root].size() == 0)
+	{
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 		return cTree.str_m_vuNodeValue[root];
 	}
 	vector<string> ValueNextLevel;
@@ -111,11 +134,16 @@ string &CGlyTree::RecurForValueTree(CGlyTree &cTree, unInt root, unInt level)
 		ValueNextLevel.push_back(RecurForValueTree(cTree, cTree.m_vvuTopology[root][i], level + 1));
 	}
 	sort(ValueNextLevel.begin(), ValueNextLevel.end(), ComByString);
+<<<<<<< HEAD
+=======
+	cTree.str_m_vuNodeValue[root] += "1";
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	vector<string>::iterator itString;
 	for (itString = ValueNextLevel.begin(); itString != ValueNextLevel.end(); itString++)
 	{
 		cTree.str_m_vuNodeValue[root] += (*itString);
 	}
+<<<<<<< HEAD
 	////char tempir1 = 'B' + addc;//////右端字符
 	char tempir1 = 'a' + addc;//////右端字符
 	stream.str("");
@@ -125,6 +153,12 @@ string &CGlyTree::RecurForValueTree(CGlyTree &cTree, unInt root, unInt level)
 }
 
 
+=======
+	cTree.str_m_vuNodeValue[root] += "2";
+	return cTree.str_m_vuNodeValue[root];
+}
+
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 double logprime[4000];
 void CGlyTree::GenerateLogPrime()
 {
@@ -425,10 +459,16 @@ bool CGlyTree::GetFragmentIons(vector<CGlyTree> &vcSubTrees )//vcSubTrees[i]表示
 							cTemp.CalKind();//没有set这里就不能计算kind,那么限制条件也就没有意义了
 							//查找节点集合是否重复;注意这里不能删除镜像结构;
 
+<<<<<<< HEAD
 							////////判断子树（Y离子）是否满足约束条件，如果不满足，则该树不合理。
 							//if(!RestricRules(cTemp.m_vuNodeKind))//去掉规则2，验证枚举库是否包含合并库
 							//	return false;//这个在后面两个库合并的时候需要注释
 
+=======
+							//判断子树（Y离子）是否满足约束条件，如果不满足，则该树不合理。
+							if(!RestricRules(cTemp.m_vuNodeKind))//去掉规则2，验证枚举库是否包含合并库
+								return false;//这个在后面两个库合并的时候需要注释
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 							//去掉节点集合相同的冗余情况
 							vector<CGlyTree>::iterator itGlyTree;
 							for(itGlyTree=vcTemps.begin();itGlyTree!=vcTemps.end();itGlyTree++)//vcTemps:cTotal+1个节点的子树集合
@@ -748,7 +788,10 @@ void CGlyTree::ComMaxAndGlycome()
 		{
 			if(IsSame[j])
 				continue;
+<<<<<<< HEAD
 			vcRes[j].GlyType = mFinalTrees[i].GlyType;
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 			mFinalTreesWithGc.push_back(vcRes[j]);
 			for(int k=j+1;k<vcRes.size();k++)
 			{
@@ -759,6 +802,7 @@ void CGlyTree::ComMaxAndGlycome()
 	}
 	cout<<"extend Ac to Gc with regard to all trees, resulting in "<<mFinalTreesWithGc.size()<<" trees "<<endl;
 }
+<<<<<<< HEAD
 
 //bool CGlyTree::ComByMass( const CGlyTree &cTreeA,const CGlyTree &cTreeB )
 //{
@@ -772,6 +816,12 @@ bool CGlyTree::ComByMass(const CGlyTree &cTreeA, const CGlyTree &cTreeB)
 }
 
 
+=======
+bool CGlyTree::ComByMass( const CGlyTree &cTreeA,const CGlyTree &cTreeB )
+{
+	return cTreeA.m_dMass<cTreeB.m_dMass;
+}
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 void  CGlyTree::InitNameToLabelStand()
 {
 	mMapNameToLabel["N-acetylgalucosamine"]=1;
@@ -815,7 +865,11 @@ void CGlyTree::ReadOneTreeInfo(ifstream &mycin, CGlyTree &tptTree)
 	strcin >> temptems >> tempvalue;
 	if (tempvalue == MAXN)
 	{
+<<<<<<< HEAD
 		//cout << " come here " << endl;
+=======
+		cout << " come here " << endl;
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 		tptTree.mRoot = 0;
 		tptTree.m_vuNodeValue[tptTree.mRoot] = tempvalue;
 		return;
@@ -876,7 +930,11 @@ void CGlyTree::ReadOneTreeInfo(ifstream &mycin, CGlyTree &tptTree)
 }
 int CGlyTree::ReadAllTreesInfoAsQueue( ifstream &mycin,queue<CGlyTree>&mTrees,int& EachReadNum)
 {
+<<<<<<< HEAD
 	S2 = clock();
+=======
+	
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	istringstream strcin;
 	string line;
 	InitNameToLabelAllStand();
@@ -953,8 +1011,11 @@ int CGlyTree::ReadAllTreesInfoAsQueue( ifstream &mycin,queue<CGlyTree>&mTrees,in
 		}
 	}
 	return mTrees.size();
+<<<<<<< HEAD
 	E2 = clock();
 	IO_time += (E2 - S2);
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 }
 void CGlyTree::ReadAllTreesInfo( const char *inFile,vector<CGlyTree>&mTrees)
 {

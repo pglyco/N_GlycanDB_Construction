@@ -2,8 +2,11 @@
 #define ENUMERATE_H_
 #define _CRT_SECURE_NO_WARNINGS
 #include "AllHead.h"
+<<<<<<< HEAD
 
 extern time_t IO_time;
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 //////////////////////////////////////////////////////////////////////////
 //生成树结构的参数，这里先用固定配置;
 //////////////////////////////////////////////////////////////////////////
@@ -31,7 +34,11 @@ public:
 	void Adjust(LoserTree Ls,int s,int k);
 	void swap(int &a,int &b);
 	void CreateLoserTree(LoserTree Ls,unInt &k);
+<<<<<<< HEAD
 	void K_Merge(LoserTree Ls,unInt NodeNum,unInt &k);
+=======
+	void K_Merge(LoserTree Ls,unInt NodeNum,unInt &k,ofstream& OutSameCodeRedunTreeFile,ofstream& OutDifCodeFile, ofstream& SameCodeIrredunFile);
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	void OutTreeIonsLink(ofstream &mycout,vector<CGlyTree> &arry);
 	bool OutOneTreeWithoutProduceFrag( ofstream &mycout, CGlyTree &cTree, unInt &size,vector<CGlyTree> &vcRes);
 	void ProduceAllTrees();
@@ -41,7 +48,11 @@ public:
 	static bool ComByValue(const CGlyTree &cTreeA,const CGlyTree &cTreeB);
 	void OutOneTreeLink(ofstream &mycout,CGlyTree &arry,unInt &size);
 	void OutOneTreeLinkPlusValue(ofstream &structout,CGlyTree &arry,unInt &size);
+<<<<<<< HEAD
 	int DeleteRedundancyAccordCode(vector<CGlyTree>& mTestTrees,unInt size);
+=======
+	int DeleteRedundancyAccordCode(ofstream& SameCodeRedunFile,ofstream& DifCodeFile,ofstream& SameCodeIrredunFile,vector<CGlyTree>& mTestTrees,unInt size);
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	unInt IrredundantGlycansExtensionAndOutput(ofstream& structout, ofstream & structoutLink, CGlyTree & newArry, unInt & RealSum);
 	void IrredundantGlycansExtension(vector<CGlyTree> & newArry, int & testnum);
 	CMonoInfo * pMono;

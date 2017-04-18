@@ -1,5 +1,8 @@
 #include "Enumerate.h"
+<<<<<<< HEAD
 time_t S1, E1, IO_time = 0;
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 CEnumerate::CEnumerate( int size,const char *startTreeFile )
 {
 	if(size<0)
@@ -79,7 +82,10 @@ bool CEnumerate::OutOneTreeWithoutProduceFrag( ofstream &mycout, CGlyTree &cTree
 
 void CEnumerate::OutOneTreeLinkPlusValue(ofstream &structout, CGlyTree &arry, unInt &size)
 {//输出成最大通用结构的形式;
+<<<<<<< HEAD
 	S1 = clock();
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	const int GlyKindNum = 5;
 	for (unInt j = 0; j<GlyKindNum; j++)
 		nodeID[j].clear();
@@ -100,6 +106,7 @@ void CEnumerate::OutOneTreeLinkPlusValue(ofstream &structout, CGlyTree &arry, un
 	}
 	const int Maxnum = 5;
 	structout << "Begin" << endl;
+<<<<<<< HEAD
 	structout << "Value=\t" << arry.str_m_vuNodeValue[arry.mRoot] <<"\t";//输出糖结构的value值，以便归并的时候可以直接读取从而去冗余。
 	
 	structout << "kind=\t";
@@ -111,6 +118,9 @@ void CEnumerate::OutOneTreeLinkPlusValue(ofstream &structout, CGlyTree &arry, un
 	structout << endl;
 
 	/////structout << "Value=\t" << arry.str_m_vuNodeValue[arry.mRoot] << endl;
+=======
+	structout << "Value=\t" << arry.str_m_vuNodeValue[arry.mRoot] << endl;//输出糖结构的value值，以便归并的时候可以直接读取从而去冗余。
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	structout << "GLYID=\t" << size << endl;//<<"TOTALNODES=\t"<<mFinalTrees[size].m_vuNodeLabel.size()<<endl;
 	if (arry.m_suNodeSet.size() != 0)
 		structout << "rootAndnodes\t" << (arry.mRoot + 1) << "\t" << arry.m_suNodeSet.size() << endl;
@@ -140,8 +150,11 @@ void CEnumerate::OutOneTreeLinkPlusValue(ofstream &structout, CGlyTree &arry, un
 		}
 	}
 	structout << "End" << endl;
+<<<<<<< HEAD
 	E1 = clock();
 	IO_time += E1 - S1;
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 }
 
 bool CEnumerate::OutOneTrees( ofstream &mycout,  CGlyTree &cTree, unInt &size,vector<CGlyTree> &vcRes)
@@ -169,6 +182,7 @@ bool CEnumerate::OutOneTrees( ofstream &mycout,  CGlyTree &cTree, unInt &size,ve
 	mycout<<"GLYID=\t"<<size<<" GLYTYPE=\t"<<cTree.GlyType<<endl;
 	mycout<<"Struct=\t0"<<endl;
 	mycout<<"Mass=\t"<<cTree.GetMass()<<endl;
+<<<<<<< HEAD
 	if (cTree.m_suNodeSet.size() != 0)
 		mycout << "rootAndnodes\t" << (cTree.mRoot + 1) << "\t" << cTree.m_suNodeSet.size() << endl;
 	else
@@ -176,6 +190,9 @@ bool CEnumerate::OutOneTrees( ofstream &mycout,  CGlyTree &cTree, unInt &size,ve
 	mycout << "GlyStr=\t" << cTree.str_m_vuNodeValue[cTree.mRoot]<<endl;
 
 	mycout << "kind=\t";
+=======
+	mycout<<"kind=\t";
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	vector<unChar>::iterator itKind;
 	for(itKind=cTree.m_vuNodeKind.begin();itKind!=cTree.m_vuNodeKind.end();itKind++)
 	{
@@ -239,6 +256,7 @@ void CEnumerate::CreateLoserTree(LoserTree Ls,unInt &k)
  
 }
 
+<<<<<<< HEAD
 ////////// This output is aimed for glycan extension, VIP
 //unInt & CEnumerate::OutOneTreeAndTreeLinkPlusValue(ofstream & FinalOut, ofstream & FinalOutLink, CGlyTree & newArry, vector<CGlyTree> & vcRes, unInt & GlyId)
 //{
@@ -284,6 +302,40 @@ unInt & CEnumerate::OutOneTreeAndTreeLinkPlusValue(ofstream & FinalOut, ofstream
 extern unsigned long long MAXN=pow(2,63)+1;
 double epsilon=0.000000000006;
 void CEnumerate::K_Merge(LoserTree Ls,unInt NodeNum,unInt &k)
+=======
+
+unInt & CEnumerate::OutOneTreeAndTreeLinkPlusValue(ofstream & FinalOut, ofstream & FinalOutLink, CGlyTree & newArry, vector<CGlyTree> & vcRes, unInt & GlyId)
+{
+	CGlyTree tempsame;
+	vector<CGlyTree> vcResTemp;
+	vector<CGlyTree> newArryWithGc;
+	newArryWithGc.clear();
+	vcResTemp.clear();
+	newArry.ExtendAc2Gc(vcResTemp, m_pMono, 0);///输出到临时文件的都是合理的糖结构
+	vector<int>IsSame(100000, 0);
+	for (int j = 0; j<vcResTemp.size(); j++)
+	{
+		vcResTemp[j].ValueTree();
+		if (IsSame[j])
+			continue;
+		vcResTemp[j].CalKind();
+		vcResTemp[j].CalMass();
+		OutOneTrees(FinalOut, vcResTemp[j], GlyId, vcRes);
+		OutOneTreeLinkPlusValue(FinalOutLink, vcResTemp[j], GlyId);
+		GlyId++;
+		for (int k = j + 1; k<vcResTemp.size(); k++)
+		{
+			if (tempsame.IsSame(vcResTemp[j], vcResTemp[k], vcResTemp[j].mRoot, vcResTemp[k].mRoot))
+				IsSame[k] = 1;
+		}
+	}
+	return GlyId;
+}
+//#define MAXN pow(2,63)+1
+extern unsigned long long MAXN=pow(2,63)+1;
+double epsilon=0.000000000006;
+void CEnumerate::K_Merge(LoserTree Ls,unInt NodeNum,unInt &k,ofstream& OutSameCodeRedunTreeFile,ofstream& OutDifCodeFile,ofstream& SameCodeIrredunFile)
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 {
 	char outnamelink[200];
 	char outname[200];
@@ -378,7 +430,11 @@ CEnumerate TempGlobal(6,"maxstructure.ini");
 //time_t start2=clock();
 //double time_all;
 /////以相等的编码值为集合去冗余
+<<<<<<< HEAD
 int CEnumerate::DeleteRedundancyAccordCode(vector<CGlyTree>& mTestTrees,unInt size)
+=======
+int CEnumerate::DeleteRedundancyAccordCode(ofstream& SameCodeRedunFile,ofstream& DifCodeFile,ofstream& SameCodeIrredunFile,vector<CGlyTree>& mTestTrees,unInt size)
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 {
 	sort(mTestTrees.begin(),mTestTrees.end(),ComByValue);
 	int start,end;
@@ -519,6 +575,7 @@ void CEnumerate::ProduceAllTrees()
 	vector<CGlyTree> startArryVec;
 	CGlyTree tempTree;
 	startArryVec.clear();
+<<<<<<< HEAD
 	m_MaxSize=6;
 	unInt sub_count;
 	char* s="GlycanDB_pGlyco_Link_Subfile";
@@ -527,6 +584,18 @@ void CEnumerate::ProduceAllTrees()
 	m_pMono = CMonoInfo::GetMono("mono.ini");
 	bool Flag_Rational;
 	time_t start = clock();
+=======
+	m_MaxSize=3;
+	unInt sub_count;
+	char* s="GlycanDB_pGlyco_Link_Subfile";
+	char subreadname[200];
+	int EachReadNum = 1000;// 5000;// 80000;//000;
+	m_pMono = CMonoInfo::GetMono("mono.ini");
+	bool Flag_Rational;
+	ofstream OutSameCodeRedunTreeFile("SameCodeRedun.txt");
+	ofstream OutDifCodeFile("DifCode.txt");
+	ofstream SameCodeIrredunFile("SameCodeIrredun.txt");
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	for(unInt i=1;i<=m_MaxSize;i++)
 	{
 		//求每一个size对应的糖结构;
@@ -581,7 +650,11 @@ void CEnumerate::ProduceAllTrees()
 				sort(newArry.begin(),newArry.end(),ComByValue);
 				unInt sumtempp=0;
 				unInt RealSum=0;
+<<<<<<< HEAD
 				int testnum=DeleteRedundancyAccordCode(newArry,newArry.size());
+=======
+				int testnum=DeleteRedundancyAccordCode(OutSameCodeRedunTreeFile,OutDifCodeFile,SameCodeIrredunFile,newArry,newArry.size());
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 				for (int r = 0; r<testnum; r++)
 				{
 					if(newArry[r].GetFragmentIons(vcRes))
@@ -618,7 +691,11 @@ void CEnumerate::ProduceAllTrees()
 			  ofstream structout(subfname);
 			  unInt sumtempp=0;
 				unInt RealSum=0;
+<<<<<<< HEAD
 			    int testnum=DeleteRedundancyAccordCode(newArry,newArry.size());
+=======
+			    int testnum=DeleteRedundancyAccordCode(OutSameCodeRedunTreeFile,OutDifCodeFile,SameCodeIrredunFile,newArry,newArry.size());
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 				for (int r = 0; r < testnum; r++)
 				{
 					if(newArry[r].GetFragmentIons(vcRes))
@@ -639,7 +716,11 @@ void CEnumerate::ProduceAllTrees()
 				ofstream structoutsubLink(subfnameLink);
 				unInt sumtempp=0;
 				unInt RealSum=0;
+<<<<<<< HEAD
 				int testnum=DeleteRedundancyAccordCode(newArry,newArry.size());
+=======
+				int testnum=DeleteRedundancyAccordCode(OutSameCodeRedunTreeFile,OutDifCodeFile,SameCodeIrredunFile,newArry,newArry.size());
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 				for (int r = 0; r<testnum; r++)
 				{
 					if(newArry[r].GetFragmentIons(vcRes))
@@ -665,15 +746,22 @@ void CEnumerate::ProduceAllTrees()
 	{
 	   LoserTree Ls;
 	   cout<<"begin to merge"<<endl;
+<<<<<<< HEAD
 	   K_Merge(Ls,i+5,sub_count);//k路合并排序
+=======
+	   K_Merge(Ls,i+5,sub_count,OutSameCodeRedunTreeFile,OutDifCodeFile,SameCodeIrredunFile);//k路合并排序
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	}
 	if(sub_count==1)
 		cout<<"you need to deal with this "<<endl;
 	   mycin.close();
 	}
+<<<<<<< HEAD
 	time_t end = clock();
 	cout << (end - start - IO_time) / 1000.0 << endl;
 	cout << " IO_time " << IO_time / 1000. << endl;
+=======
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	cout<<" fragment end "<<endl;
 }
 

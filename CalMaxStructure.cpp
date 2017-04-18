@@ -143,8 +143,12 @@ void CCalMaxStructure::ThreeMaxTreeToSubTree()
 	for(size_t i=0;i<ComSubTrees.size();i++)
 	{
 		ComSubTrees[i].CalMass();
+<<<<<<< HEAD
 		if (1==1)
 		//////////////////////if (Is_Comb_N_Glycan(ComSubTrees[i], ComSubTrees[i].mRoot))///////这里是用来判断是否为N_糖的，非常重要！！！
+=======
+		if (Is_Comb_N_Glycan(ComSubTrees[i], ComSubTrees[i].mRoot))
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 		{
 			temppp.OutOneTrees(myccout,  ComSubTrees[i], outnum,temppp.vcRes);
 			temppp.OutOneTreeLink(structout,ComSubTrees[i],outnum);//输出这棵树的Link结构

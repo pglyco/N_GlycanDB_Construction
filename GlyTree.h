@@ -38,8 +38,12 @@ public:
 	void ValueTree();
 	void GenerateLogPrime();
 	double ConvertStringWithGodel(string& StringRoot);
+<<<<<<< HEAD
 	//string RecurForValueTree(CGlyTree &cTree, unInt root, unInt level);
 	string &RecurForValueTree(CGlyTree &cTree, unInt root, unInt level);
+=======
+	string RecurForValueTree(CGlyTree &cTree, unInt root, unInt level);
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 	bool IsSame(CGlyTree &cTreeA,CGlyTree &cTreeB, unInt uRa,unInt uRb);
     bool operator==(CGlyTree &cTreeB);
 	bool operator>(const CGlyTree &cTreeB);

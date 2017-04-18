@@ -31,7 +31,11 @@ void OutputData::OutputAccordEquivalenceClass(const char *OrigFile, const char *
 				strcin.clear();
 				strcin.str(line);
 				strcin >> name >> StrValue;
+<<<<<<< HEAD
 				if (name == "IonMass=")/////////////确定这里质量已经按序排列了么？
+=======
+				if (name == "IonMass=")
+>>>>>>> 305e4cbcbc52032e29a6bceef17153f461bfb193
 				{
 					GlyandSubGlyMass.push_back(StrValue);
 				}
