@@ -1,0 +1,6 @@
+[DB_Construction v1.0]
+glycandb_type=E
+max_glyco_number=10
+is_filter_rule=1
+is_extend_NeuGc=0
+is_equivalence_merge=0
